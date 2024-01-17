@@ -1,15 +1,15 @@
-import axios, {AxiosInstance, CreateAxiosDefaults} from "axios";
+import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
 
 export type ApiClientOptions = {
-    basePath?: string;
+	basePath?: string;
 } & CreateAxiosDefaults;
 
 export class BaseApiClient {
-    protected readonly options: ApiClientOptions;
-    protected readonly axiosClient: AxiosInstance;
+	protected readonly options: ApiClientOptions;
+	protected readonly axiosClient: AxiosInstance;
 
-    constructor(options: ApiClientOptions) {
-        this.options = options;
-        this.axiosClient = axios.create(options);
-    }
+	constructor(options: ApiClientOptions) {
+		this.options = options;
+		this.axiosClient = axios.create(options);
+	}
 }
