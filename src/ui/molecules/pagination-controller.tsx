@@ -1,6 +1,5 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { keyframes } from '@emotion/react';
 import { styled } from '@mui/material';
 import { useMemo } from 'react';
 
@@ -16,16 +15,16 @@ export const PaginationController: React.FC<Props> = ({ currentPage, setPage }) 
 
 	return (
 		<Flexbox>
-			<PaginationSelectorBox disabled={isLeftArrowDisabled}
-														 onClick={() => !isLeftArrowDisabled && setPage(currentPage - 1)}>
+			<PaginationSelectorBox
+				onClick={() => !isLeftArrowDisabled && setPage(currentPage - 1)}>
 				<CenteredDiv>
 					<ArrowBackIcon />
 				</CenteredDiv>
 			</PaginationSelectorBox>
-			<PaginationSelectorBox disabled>
+			<PaginationSelectorBox>
 				<CenteredDiv>{currentPage}</CenteredDiv>
 			</PaginationSelectorBox>
-			<PaginationSelectorBox disabled={false} onClick={() => setPage(currentPage + 1)}>
+			<PaginationSelectorBox onClick={() => setPage(currentPage + 1)}>
 				<CenteredDiv>
 					<ArrowForwardIcon />
 				</CenteredDiv>
@@ -42,15 +41,6 @@ const Flexbox = styled('div')(() => {
 	};
 });
 
-const colorGradient = keyframes`
-    from {
-        background: 'white';
-    }
-    to {
-        background: 'lightGray';
-    }
-`;
-
 const CenteredDiv = styled('div')(() => {
 	return {
 		position: 'absolute',
@@ -61,18 +51,12 @@ const CenteredDiv = styled('div')(() => {
 	};
 });
 
-const PaginationSelectorBox = styled('div')<{ disabled: boolean }>(({ disabled }) => {
+const PaginationSelectorBox = styled('div')(() => {
 		return {
 			position: 'relative',
 			width: '2rem',
 			height: '2rem',
 			cursor: 'pointer',
-			disabled: disabled,
-
-			'&:hover': {
-				animation: '${colorGradient} 1s',
-				animationFillMode: 'forwards',
-			},
 		};
 	},
 );

@@ -70,7 +70,9 @@ export const MainTemplate: React.FC<Props> = ({ children }) => {
 							{title}
 						</Typography>
 						{loaded && (
-							<HeartWithNumber number={heartsNumber} />
+							<Link href="/favorites">
+								<HeartWithNumber number={heartsNumber} />
+							</Link>
 						)}
 					</Toolbar>
 				</AppBar>

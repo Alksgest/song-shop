@@ -2,25 +2,29 @@ import { Song } from '@/types/models';
 import { styled } from '@mui/material';
 import { EmptyHeartIcon, FilledHeartIcon } from '@/ui/atoms/icons';
 import Image from 'next/image';
+import { FavoriteSong } from '@/types/ui';
+import { useAppSelector } from '@/redux/hooks';
 
 type Props = {
-	song: Song;
-	isFavorite: boolean;
+	song: FavoriteSong;
+	displayArtistName?: boolean;
 	toggleSong: (artistId: string, songId: string) => void
 }
 
-export const SongLine: React.FC<Props> = ({ song, isFavorite, toggleSong }) => {
-
+export const SongLine: React.FC<Props> = ({ song, toggleSong, displayArtistName }) => {
 	return (
 		<Container>
 			<CenteredContainer>
-				{isFavorite ? <FilledHeartIcon onClick={() => toggleSong(song.artistId, song.id)} /> :
+				{song.isFavorite ? <FilledHeartIcon onClick={() => toggleSong(song.artistId, song.id)} /> :
 					<EmptyHeartIcon onClick={() => toggleSong(song.artistId, song.id)} />}
 			</CenteredContainer>
 			<Image src={song.cover} alt={song.name} width={60} height={60} />
 			<TextContainer>
 				<CenteredContainer>
-					{song.name}
+					<div>
+						{displayArtistName && (<div>{song.artistName}</div>)}
+						<div>{song.name}</div>
+					</div>
 				</CenteredContainer>
 				<CenteredContainer>
 					{song.duration}

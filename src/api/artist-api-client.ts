@@ -16,34 +16,39 @@ export class ArtistApiClient extends BaseApiClient {
 	}
 
 	public async getArtistList(): Promise<Artist[]> {
-		const response = await this.axiosClient.get<Artist[]>('');
-		return response.data;
+		return this.doRequest(async () => {
+			const response = await this.axiosClient.get<Artist[]>('');
+			return response.data;
+		});
 	}
 
 	public async getArtistById(id: string): Promise<Artist> {
-		const response = await this.axiosClient.get<Artist>(`/${id}`);
-		return response.data;
+		return this.doRequest(async () => {
+			const response = await this.axiosClient.get<Artist>(`/${id}`);
+			return response.data;
+		});
 	}
 
-	public async getSongListPage(artistId: string, page: number, limit: number): Promise<PaginatedList<Song>> {
-		const response = await this.axiosClient.get<Song[]>(
-			`${artistId}/songs`,
-			{
-				params: {
-					page,
-					limit,
-				},
-			});
+	public async getSongListPage(artistId: string, page: number, limit: number): Promise<Song[]> {
+		return await this.doRequest(async () => {
+			const response = await this.axiosClient.get<Song[]>(
+				`${artistId}/songs`,
+				{
+					params: {
+						page,
+						limit,
+					},
+				});
 
-		return {
-			currentPage: page,
-			data: response.data,
-		};
+			return response.data;
+		});
 	}
 
-	public async getSongById(id: string): Promise<Song> {
-		const response = await this.axiosClient.get<Song>(`songs/${id}`);
-		return response.data;
+	public async getSongById(artistId: string, songId: string): Promise<Song> {
+		return this.doRequest(async () => {
+			const response = await this.axiosClient.get<Song>(`/${artistId}/songs/${songId}`);
+			return response.data;
+		});
 	}
 }
 

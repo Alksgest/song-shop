@@ -1,28 +1,39 @@
-import { useEffect, useState } from 'react';
-import { Artist } from '@/types/models';
+import React, { useEffect } from 'react';
 import { artistApiClient } from '@/api/artist-api-client';
-import { Stack, styled } from '@mui/material';
+import { styled } from '@mui/material';
 import { ArtistPaper } from '@/features/artists/components/artist-paper';
 import Link from 'next/link';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { refetchArtists, setIsArtistsLoading } from '@/redux/reducers/artists-reducer';
 
 export const ArtistsPage: React.FC = () => {
-	const [artists, setArtists] = useState<Artist[]>([]);
+	const dispatch = useAppDispatch();
+	const { data, isLoaded, isLoading } = useAppSelector(state => state.artists);
 
 	useEffect(() => {
+		if(isLoaded) {
+			return;
+		}
+
 		artistApiClient.getArtistList().then((data) => {
-			setArtists(data);
+			dispatch(setIsArtistsLoading());
+			dispatch(refetchArtists());
 		});
-	}, []);
+	}, [dispatch]);
+
+	if (isLoading && !isLoaded) {
+		return <></>;
+	}
 
 	return (
 		<ArtistsContainer>
-			{artists.map(el => {
+			{data.map(el => {
 				return (
-					<>
+					<React.Fragment key={el.id}>
 						<Link href={`artists/${el.id}`}>
 							<ArtistPaper key={el.id} artist={el} />
 						</Link>
-					</>
+					</React.Fragment>
 				);
 			})}
 		</ArtistsContainer>

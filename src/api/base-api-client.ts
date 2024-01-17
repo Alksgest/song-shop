@@ -12,4 +12,12 @@ export class BaseApiClient {
 		this.options = options;
 		this.axiosClient = axios.create(options);
 	}
+
+	protected async doRequest(func: Function) {
+		try {
+			return await func();
+		} catch (e: unknown) {
+			console.error((e as { message: unknown }).message);
+		}
+	}
 }
