@@ -5,13 +5,20 @@ import { ArtistPaper } from '@/features/artists/components/artist-paper';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { refetchArtists, setIsArtistsLoading } from '@/redux/reducers/artists-reducer';
+import { setAppTitle } from '@/redux/reducers/app-settings-reducer';
+
+const pageTitle = 'Artists';
 
 export const ArtistsPage: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { data, isLoaded, isLoading } = useAppSelector(state => state.artists);
 
 	useEffect(() => {
-		if(isLoaded) {
+		dispatch(setAppTitle(pageTitle));
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (isLoaded) {
 			return;
 		}
 
@@ -19,7 +26,7 @@ export const ArtistsPage: React.FC = () => {
 			dispatch(setIsArtistsLoading());
 			dispatch(refetchArtists());
 		});
-	}, [dispatch]);
+	}, [dispatch, isLoaded]);
 
 	if (isLoading && !isLoaded) {
 		return <></>;

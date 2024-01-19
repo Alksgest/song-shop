@@ -5,3 +5,7 @@ export type ArtistsState = {
 	isLoaded: boolean;
 	isLoading: boolean;
 }
+
+export type AppSettingsState = {
+	title: string;
+}

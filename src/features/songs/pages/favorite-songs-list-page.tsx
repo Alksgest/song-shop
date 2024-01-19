@@ -4,8 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { artistApiClient } from '@/api/artist-api-client';
 import { SongsList } from '@/features/shared/components/songs-list';
 import { FavoriteSong } from '@/types/ui';
+import { setAppTitle } from '@/redux/reducers/app-settings-reducer';
+import { useAppDispatch } from '@/redux/hooks';
 
 type SongWithDate = FavoriteSong & { addingDate: Date };
+
+const pageTitle = 'Favorites';
 
 async function getSongs(favoriteSongs: FavoriteSongsType): Promise<SongWithDate[]> {
 	const keys = Object.keys(favoriteSongs);
@@ -49,6 +53,12 @@ export const FavoriteSongsListPage: React.FC = () => {
 	const [songs, setSongs] = useState<SongWithDate[]>([]);
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(setAppTitle(pageTitle));
+	}, [dispatch]);
+
 	useEffect(() => {
 		if (isLoaded) {
 			return;
@@ -60,5 +70,5 @@ export const FavoriteSongsListPage: React.FC = () => {
 		setIsLoaded(() => true);
 	}, [favoriteSongs, isLoaded]);
 
-	return <SongsList songs={songs} displayArtistName/>;
+	return <SongsList songs={songs} displayArtistName />;
 };

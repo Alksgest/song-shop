@@ -10,13 +10,7 @@ import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 import { BackIcon } from '@/ui/atoms/icons';
 import Link from 'next/link';
-
-
-const titleMapObject: { [key: string]: string } = {
-	'/artists': 'Artists',
-	'/artists/[id]': 'Artist',
-	'/favorites': 'Favorites',
-};
+import { useAppSelector } from '@/redux/hooks';
 
 type Props = {
 	children: React.ReactNode;
@@ -25,19 +19,14 @@ type Props = {
 export const MainTemplate: React.FC<Props> = ({ children }) => {
 	const [loaded, setLoaded] = useState(false);
 
-	const [title, setTitle] = useState<string>('');
-	const router = useRouter();
-
+	const { title } = useAppSelector(state => state.appSettings);
 	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
+
+	const router = useRouter();
 
 	useEffect(() => {
 		setLoaded(true);
 	}, []);
-
-	useEffect(() => {
-		const title = titleMapObject[router.pathname] || '';
-		setTitle(title);
-	}, [router.pathname]);
 
 	const heartsNumber = useMemo(() => {
 		return Object.keys(favoriteSongs).reduce((curr, next) => {
