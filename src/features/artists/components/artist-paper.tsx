@@ -1,25 +1,41 @@
 import { Artist } from '@/types/models';
-import { styled } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 type Props = {
 	artist?: Artist;
 }
 
 export const ArtistPaper: React.FC<Props> = ({ artist }) => {
+	const isMobile = useMediaQuery('(max-width:600px)');
+
+	const imageSize = useMemo(() => {
+		if (isMobile) {
+			return {
+				w: 80,
+				h: 80,
+			};
+		}
+		return {
+			w: 120,
+			h: 120,
+		};
+	}, [isMobile]);
+
 	if (!artist) {
 		return <></>;
 	}
 
 	return (
 		<ArtistContainer>
-			<StyledImage src={artist.avatar} alt={artist.name} width={120} height={120} />
+			<StyledImage src={artist.avatar} alt={artist.name} width={imageSize.w} height={imageSize.h} />
 			<NameContainer>{artist.name}</NameContainer>
 		</ArtistContainer>
 	);
 };
 
-const ArtistContainer = styled('div')(() => ({
+const ArtistContainer = styled('div')(({ theme }) => ({
 	width: 200,
 	height: 200,
 	textAlign: 'center',
@@ -32,8 +48,11 @@ const ArtistContainer = styled('div')(() => ({
 	'&:hover': {
 		background: '#F0FFFF',
 	},
-	background: 'white',
 	border: 'solid 2px black',
+	[theme.breakpoints.down('sm')]: {
+		width: 150,
+		height: 150,
+	},
 }));
 
 const NameContainer = styled('div')(() => {

@@ -5,6 +5,7 @@ import { SongsList } from '@/features/shared/components/songs-list';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 import { FavoriteSong } from '@/types/ui';
+import { generateSongKeyInLocalStorage } from '@/util';
 
 
 const elementsPerPage = 5;
@@ -33,7 +34,7 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 	const songs = useMemo(() => {
 		return rawSongs.map(el => {
 			const favorite = { ...el, isFavorite: false };
-			const key = `${el.artistId}_${el.id}`;
+			const key = generateSongKeyInLocalStorage(el.artistId, el.id);
 			if (!!favoriteSongs[key]) {
 				favorite.isFavorite = true;
 			}

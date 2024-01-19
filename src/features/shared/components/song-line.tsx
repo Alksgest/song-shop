@@ -1,9 +1,7 @@
-import { Song } from '@/types/models';
 import { styled } from '@mui/material';
 import { EmptyHeartIcon, FilledHeartIcon } from '@/ui/atoms/icons';
 import Image from 'next/image';
 import { FavoriteSong } from '@/types/ui';
-import { useAppSelector } from '@/redux/hooks';
 
 type Props = {
 	song: FavoriteSong;
@@ -34,11 +32,14 @@ export const SongLine: React.FC<Props> = ({ song, toggleSong, displayArtistName 
 	);
 };
 
-const Container = styled('div')(() => {
+const Container = styled('div')(({ theme }) => {
 	return {
 		display: 'flex',
 		width: '500px',
 		margin: '5px',
+		[theme.breakpoints.down('sm')]: {
+			width: "350px",
+		},
 	};
 });
 
