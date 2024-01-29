@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { artistApiClient } from '@/api/artist-api-client';
 import { styled } from '@mui/material';
 import { ArtistPaper } from '@/features/artists/components/artist-paper';
 import Link from 'next/link';
@@ -22,10 +21,8 @@ export const ArtistsPage: React.FC = () => {
 			return;
 		}
 
-		artistApiClient.getArtistList().then((data) => {
-			dispatch(setIsArtistsLoading());
-			dispatch(refetchArtists());
-		});
+		dispatch(setIsArtistsLoading());
+		dispatch(refetchArtists());
 	}, [dispatch, isLoaded]);
 
 	if (isLoading && !isLoaded) {

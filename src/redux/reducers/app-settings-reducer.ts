@@ -1,4 +1,4 @@
-import { AppSettingsState, ArtistsState } from '@/redux/state';
+import { AppSettingsState, ArtistsState } from '@/redux/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { artistApiClient } from '@/api/artist-api-client';
 

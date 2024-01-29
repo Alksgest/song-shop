@@ -4,22 +4,21 @@ import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 import { PaginationController } from '@/ui/molecules';
 import { SongLine } from '@/features/shared/components/song-line';
 import { FavoriteSong } from '@/types/ui';
-import { generateSongKeyInLocalStorage } from '@/util';
+import { generateSongKeyInLocalStorage } from '../../../utils';
 
 type Props = {
 	songs: FavoriteSong[];
 	displayArtistName?: boolean;
-	withAuthorName?: boolean;
 	currentPage?: number;
 	setCurrentPage?: Dispatch<SetStateAction<number>>
 }
 
 export const SongsList: React.FC<Props> = ({
-	 songs,
-	 currentPage,
-	 setCurrentPage,
-	 displayArtistName,
- }) => {
+ songs,
+ currentPage,
+ setCurrentPage,
+ displayArtistName,
+}) => {
 	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
 	const toggleSong = useCallback((artistId: string, songId: string) => {
@@ -46,7 +45,11 @@ export const SongsList: React.FC<Props> = ({
 		return songs.map((el) => {
 			const key = generateSongKeyInLocalStorage(el.artistId, el.id);
 			const isFavorite = !!favoriteSongs[key];
-			return <SongLine key={key} song={el} toggleSong={toggleSong} displayArtistName={displayArtistName} />;
+			return <SongLine
+				key={key}
+				song={{ ...el, isFavorite }}
+				toggleSong={toggleSong}
+				displayArtistName={displayArtistName} />;
 		});
 	}, [displayArtistName, favoriteSongs, songs, toggleSong]);
 

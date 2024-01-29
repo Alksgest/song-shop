@@ -7,20 +7,25 @@ type Props = {
 	artist?: Artist;
 }
 
+const smallImageSize = {
+	w: 80,
+	h: 80,
+};
+
+const bigImageSize = {
+	w: 120,
+	h: 120,
+};
+
 export const ArtistPaper: React.FC<Props> = ({ artist }) => {
 	const isMobile = useMediaQuery('(max-width:600px)');
 
 	const imageSize = useMemo(() => {
 		if (isMobile) {
-			return {
-				w: 80,
-				h: 80,
-			};
+			return smallImageSize;
 		}
-		return {
-			w: 120,
-			h: 120,
-		};
+
+		return bigImageSize;
 	}, [isMobile]);
 
 	if (!artist) {
@@ -65,7 +70,6 @@ const NameContainer = styled('div')(() => {
 
 const StyledImage = styled(Image)(() => {
 	return {
-		// borderRadius: "2px",
-		// border: "solid 2px black"
+		borderRadius: "50%",
 	};
 });

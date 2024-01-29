@@ -13,7 +13,6 @@ const pageTitle = 'Favorites';
 
 async function getSongs(favoriteSongs: FavoriteSongsType): Promise<SongWithDate[]> {
 	const keys = Object.keys(favoriteSongs);
-	const promises: Promise<SongWithDate>[] = [];
 
 	const loadedSongs: SongWithDate[] = [];
 
@@ -36,13 +35,7 @@ async function getSongs(favoriteSongs: FavoriteSongsType): Promise<SongWithDate[
 			});
 
 		loadedSongs.push(song);
-
-		// because of API limitation
-		// await new Promise(resolve => setTimeout(resolve, 600));
 	}
-
-	// unfortunately with this API it is impossible to do with promise all.
-	// const songs = await Promise.all(promises);
 
 	return loadedSongs
 		.toSorted((a, b) => +a.addingDate - +b.addingDate);

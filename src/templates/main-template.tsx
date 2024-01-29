@@ -29,6 +29,7 @@ export const MainTemplate: React.FC<Props> = ({ children }) => {
 	}, []);
 
 	const heartsNumber = useMemo(() => {
+		// this reduce is necessary because right now it is possible to store null value under the key
 		return Object.keys(favoriteSongs).reduce((curr, next) => {
 			if (favoriteSongs[next]) {
 				++curr;

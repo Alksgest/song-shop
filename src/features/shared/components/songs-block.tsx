@@ -4,8 +4,7 @@ import { artistApiClient } from '@/api/artist-api-client';
 import { SongsList } from '@/features/shared/components/songs-list';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
-import { FavoriteSong } from '@/types/ui';
-import { generateSongKeyInLocalStorage } from '@/util';
+import { generateSongKeyInLocalStorage } from '../../../utils';
 
 
 const elementsPerPage = 5;
@@ -25,7 +24,7 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		}
 
 		artistApiClient
-			.getSongListPage(artistId, currentPage, elementsPerPage)
+			.getArtistsSongs(artistId, { limit: elementsPerPage, page: currentPage })
 			.then((data) => {
 				setRawSongs(data);
 			});
@@ -46,9 +45,5 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		return <></>;
 	}
 
-	return (
-		<>
-			<SongsList songs={songs} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-		</>
-	);
+	return <SongsList songs={songs} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
 };

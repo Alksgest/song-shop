@@ -1,6 +1,6 @@
 import { ApiClientOptions, BaseApiClient } from '@/api/base-api-client';
 import { Artist, Song } from '@/types/models';
-import { PaginatedList } from '@/types/paginated-list';
+import { PaginationParams } from '@/types/pagination';
 
 // https://640799f62f01352a8a7faa72.mockapi.io/api/artists
 // https://640799f62f01352a8a7faa72.mockapi.io/api/artists/1
@@ -29,15 +29,12 @@ export class ArtistApiClient extends BaseApiClient {
 		});
 	}
 
-	public async getSongListPage(artistId: string, page: number, limit: number): Promise<Song[]> {
+	public async getArtistsSongs(artistId: string, params: PaginationParams): Promise<Song[]> {
 		return await this.doRequest(async () => {
 			const response = await this.axiosClient.get<Song[]>(
 				`${artistId}/songs`,
 				{
-					params: {
-						page,
-						limit,
-					},
+					params,
 				});
 
 			return response.data;

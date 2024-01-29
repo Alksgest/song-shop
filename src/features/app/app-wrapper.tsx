@@ -6,7 +6,7 @@ type Props = {
 	children: React.ReactNode;
 };
 
-export const AppWrapper: React.FC<Props> = ({ children, ...rest }) => {
+export const AppWrapper: React.FC<Props> = ({ children }) => {
 	return (
 		<ReduxProvider store={store}>
 			<MainTemplate>{children}</MainTemplate>
