@@ -3,7 +3,7 @@ import { Song } from '@/types/models';
 import { artistApiClient } from '@/api/artist-api-client';
 import { SongsList } from '@/features/shared/components/songs-list';
 import { generateSongKeyInLocalStorage } from '@/utils';
-import { useBadPaginationApi } from '@/hooks';
+import { useNotStrictPaginationApi } from '@/hooks';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 
@@ -22,11 +22,11 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		return [artistId];
 	}, [artistId]);
 
-	const [data, currentPage, setCurrentPage, hasNext, hasPrev] = useBadPaginationApi<Song>(
+	const [data, currentPage, setCurrentPage, hasNext, hasPrev] = useNotStrictPaginationApi<Song>(
 		getDataFunc,
 		elementsPerPage,
-		getDataParams,
 		true,
+		getDataParams,
 	);
 
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});

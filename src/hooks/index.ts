@@ -1,1 +1,1 @@
-export * from './useBadPaginationApi';
+export * from './useNotStrictPaginationApi';
