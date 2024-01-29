@@ -21,10 +21,13 @@ export const useBadPaginationApi = <T = unknown>(
 		return nextPageData.length !== 0;
 	}, [nextPageData]);
 
-	const setPageFunc = useCallback((page: number) => {
-		setCurrentPage(page);
-		setPreviousCurrentPage(currentPage);
-	}, [currentPage]);
+	const setPageFunc = useCallback(
+		(page: number) => {
+			setCurrentPage(page);
+			setPreviousCurrentPage(currentPage);
+		},
+		[currentPage],
+	);
 
 	useEffect(() => {
 		if (isParamsRequired && !other) {
@@ -45,7 +48,7 @@ export const useBadPaginationApi = <T = unknown>(
 			});
 		}
 
-		if(currentPage > previousCurrentPage) {
+		if (currentPage > previousCurrentPage) {
 			setPrevPageData(currentPageData);
 			setCurrentPageData(nextPageData);
 
@@ -54,7 +57,7 @@ export const useBadPaginationApi = <T = unknown>(
 			});
 		}
 
-		if(currentPage < previousCurrentPage) {
+		if (currentPage < previousCurrentPage) {
 			setNextPageData(currentPageData);
 			setCurrentPageData(prevPageData);
 
@@ -62,7 +65,6 @@ export const useBadPaginationApi = <T = unknown>(
 				setPrevPageData(data);
 			});
 		}
-
 	}, [currentPage, elementsPerPage, getData, isParamsRequired, other, previousCurrentPage]);
 
 	return [currentPageData, currentPage, setPageFunc, hasNext, hasPrev];
