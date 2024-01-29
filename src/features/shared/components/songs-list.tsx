@@ -1,22 +1,25 @@
-import React, { Dispatch, SetStateAction, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 import { PaginationController } from '@/ui/molecules';
 import { SongLine } from '@/features/shared/components/song-line';
 import { FavoriteSong } from '@/types/ui';
-import { generateSongKeyInLocalStorage } from '../../../utils';
+import { generateSongKeyInLocalStorage } from '@/utils';
 
 type Props = {
 	songs: FavoriteSong[];
 	displayArtistName?: boolean;
-	currentPage?: number;
-	setCurrentPage?: Dispatch<SetStateAction<number>>
+	paginationParams?: {
+		currentPage: number;
+		setCurrentPage: (page: number) => void,
+		hasNext: boolean;
+		hasPrev: boolean;
+	}
 }
 
 export const SongsList: React.FC<Props> = ({
  songs,
- currentPage,
- setCurrentPage,
+ paginationParams,
  displayArtistName,
 }) => {
 	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
@@ -56,8 +59,13 @@ export const SongsList: React.FC<Props> = ({
 	return (
 		<>
 			<div>{songsBlock}</div>
-			{currentPage && setCurrentPage && (
-				<PaginationController currentPage={currentPage} setPage={(page) => setCurrentPage(page)} />
+			{paginationParams && (
+				<PaginationController
+					hasPrev={paginationParams.hasPrev}
+					hasNext={paginationParams.hasNext}
+					currentPage={paginationParams.currentPage}
+					setPage={(page) => paginationParams.setCurrentPage(page)}
+				/>
 			)}
 		</>
 	);

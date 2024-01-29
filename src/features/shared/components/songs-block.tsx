@@ -1,37 +1,38 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Song } from '@/types/models';
 import { artistApiClient } from '@/api/artist-api-client';
 import { SongsList } from '@/features/shared/components/songs-list';
+import { generateSongKeyInLocalStorage } from '@/utils';
+import { useBadPaginationApi } from '@/hooks';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
-import { generateSongKeyInLocalStorage } from '../../../utils';
-
 
 const elementsPerPage = 5;
 
 type Props = {
 	artistId?: string;
-}
+};
 
 export const SongsBlock: React.FC<Props> = ({ artistId }) => {
-	const [rawSongs, setRawSongs] = useState<Song[]>([]);
-	const [currentPage, setCurrentPage] = useState(1);
+	const getDataFunc = useMemo(() => {
+		return artistApiClient.getArtistsSongs.bind(artistApiClient);
+	}, []);
+
+	const getDataParams = useMemo(() => {
+		return [artistId];
+	}, [artistId]);
+
+	const [data, currentPage, setCurrentPage, hasNext, hasPrev] = useBadPaginationApi<Song>(
+		getDataFunc,
+		elementsPerPage,
+		getDataParams,
+		true,
+	);
+
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
-	useEffect(() => {
-		if (!artistId) {
-			return;
-		}
-
-		artistApiClient
-			.getArtistsSongs(artistId, { limit: elementsPerPage, page: currentPage })
-			.then((data) => {
-				setRawSongs(data);
-			});
-	}, [artistId, currentPage]);
-
 	const songs = useMemo(() => {
-		return rawSongs.map(el => {
+		return data.map((el) => {
 			const favorite = { ...el, isFavorite: false };
 			const key = generateSongKeyInLocalStorage(el.artistId, el.id);
 			if (!!favoriteSongs[key]) {
@@ -39,11 +40,13 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 			}
 			return favorite;
 		});
-	}, [favoriteSongs, rawSongs]);
+	}, [favoriteSongs, data]);
 
 	if (!artistId) {
 		return <></>;
 	}
 
-	return <SongsList songs={songs} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+	return (
+		<SongsList songs={songs} paginationParams={{ currentPage, setCurrentPage, hasPrev, hasNext }} />
+	);
 };

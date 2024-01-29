@@ -1,22 +1,19 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { styled } from '@mui/material';
-import { useMemo } from 'react';
 
 type Props = {
 	currentPage: number;
-	setPage: (value: number) => void;
+	setPage: (page: number) => void;
+	hasNext: boolean;
+	hasPrev: boolean;
 };
 
-export const PaginationController: React.FC<Props> = ({ currentPage, setPage }) => {
-	const isLeftArrowDisabled = useMemo(() => {
-		return currentPage <= 1;
-	}, [currentPage]);
-
+export const PaginationController: React.FC<Props> = ({ currentPage, setPage, hasNext, hasPrev }) => {
 	return (
 		<Flexbox>
 			<PaginationSelectorBox
-				onClick={() => !isLeftArrowDisabled && setPage(currentPage - 1)}>
+				onClick={() => hasPrev && setPage(currentPage - 1)}>
 				<CenteredDiv>
 					<ArrowBackIcon />
 				</CenteredDiv>
@@ -24,7 +21,7 @@ export const PaginationController: React.FC<Props> = ({ currentPage, setPage }) 
 			<PaginationSelectorBox>
 				<CenteredDiv>{currentPage}</CenteredDiv>
 			</PaginationSelectorBox>
-			<PaginationSelectorBox onClick={() => setPage(currentPage + 1)}>
+			<PaginationSelectorBox onClick={() => hasNext && setPage(currentPage + 1)}>
 				<CenteredDiv>
 					<ArrowForwardIcon />
 				</CenteredDiv>
