@@ -33,6 +33,9 @@ export const useNotStrictPaginationApi = <T = unknown>(
 		[currentPage],
 	);
 
+	/**
+	 * Initial data load, when current and prevCurrent are equal
+	 */
 	useEffect(() => {
 		if (isParamsRequired && !params) {
 			return;
@@ -57,6 +60,9 @@ export const useNotStrictPaginationApi = <T = unknown>(
 		});
 	}, [currentPage, elementsPerPage, getData, isParamsRequired, params, previousCurrentPage]);
 
+	/**
+	 * Load next page data if step forward
+	 */
 	useEffect(() => {
 		if (currentPage <= previousCurrentPage) {
 			return;
@@ -71,6 +77,10 @@ export const useNotStrictPaginationApi = <T = unknown>(
 		});
 	}, [currentPage, elementsPerPage, getData, params, previousCurrentPage]);
 
+	/**
+	 * Load prev page data if step backward
+	 * In case if current page is 1 do not load zero page
+	 */
 	useEffect(() => {
 		if (currentPage >= previousCurrentPage) {
 			return;
