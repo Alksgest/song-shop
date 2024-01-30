@@ -7,6 +7,7 @@ import { useNotStrictPaginationApi } from '@/hooks';
 import useLocalStorage from 'use-local-storage';
 import { favoriteSongsKey, FavoriteSongsType } from '@/types/local-storage';
 import { CircularProgress } from '@mui/material';
+import { CommonLoader } from '@/ui/molecules/common-loader';
 
 const elementsPerPage = 5;
 
@@ -15,8 +16,6 @@ type Props = {
 };
 
 export const SongsBlock: React.FC<Props> = ({ artistId }) => {
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-
 	const getDataFunc = useMemo(() => {
 		return artistApiClient.getArtistsSongs.bind(artistApiClient);
 	}, []);
@@ -25,7 +24,7 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		return [artistId];
 	}, [artistId]);
 
-	const [data, currentPage, setCurrentPage, hasNext, hasPrev] = useNotStrictPaginationApi<Song>(
+	const [data, currentPage, setCurrentPage, hasNext, hasPrev, isLoading] = useNotStrictPaginationApi<Song>(
 		getDataFunc,
 		elementsPerPage,
 		true,
@@ -36,7 +35,6 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 
 	const songs = useMemo(() => {
 		if (!data) {
-			setIsLoading(false);
 			return [];
 		}
 
@@ -49,7 +47,6 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 			return favorite;
 		});
 
-		setIsLoading(false);
 		return songs;
 	}, [favoriteSongs, data]);
 
@@ -57,11 +54,12 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		return <></>;
 	}
 
-	if (isLoading) {
-		return <CircularProgress />;
-	}
-
 	return (
-		<SongsList songs={songs} paginationParams={{ currentPage, setCurrentPage, hasPrev, hasNext }} />
+		<CommonLoader isLoading={isLoading}>
+			<SongsList
+				songs={songs}
+				paginationParams={{ currentPage, setCurrentPage, hasPrev, hasNext }}
+			/>
+		</CommonLoader>
 	);
 };
