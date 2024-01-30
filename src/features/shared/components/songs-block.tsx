@@ -24,12 +24,8 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 		return [artistId];
 	}, [artistId]);
 
-	const [data, currentPage, setCurrentPage, hasNext, hasPrev, isLoading] = useNotStrictPaginationApi<Song>(
-		getDataFunc,
-		elementsPerPage,
-		true,
-		getDataParams,
-	);
+	const [data, currentPage, setCurrentPage, hasNext, hasPrev, isLoading] =
+		useNotStrictPaginationApi<Song>(getDataFunc, elementsPerPage, true, getDataParams);
 
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
