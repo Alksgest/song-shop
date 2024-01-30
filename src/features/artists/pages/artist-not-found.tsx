@@ -12,8 +12,7 @@ export const ArtistNotFoundPage: React.FC = () => {
 
 const Container = styled('div')(() => {
 	return {
-		width: '100%',
-		height: '100%',
+		height: 'calc(100% - 200px)',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
