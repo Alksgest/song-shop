@@ -31,11 +31,9 @@ export class ArtistApiClient extends BaseApiClient {
 
 	public async getArtistsSongs(artistId: string, params: PaginationParams): Promise<Song[]> {
 		return await this.doRequest(async () => {
-			const response = await this.axiosClient.get<Song[]>(
-				`${artistId}/songs`,
-				{
-					params,
-				});
+			const response = await this.axiosClient.get<Song[]>(`${artistId}/songs`, {
+				params,
+			});
 
 			return response.data;
 		});

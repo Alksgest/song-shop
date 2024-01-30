@@ -26,19 +26,15 @@ export const artistsSlice = createSlice({
 	},
 });
 
-export const refetchArtists = createAsyncThunk(
-	'artists/refetchArtists',
-	async () => {
-		try {
-			return await artistApiClient.getArtistList();
-		} catch (e: unknown) {
-			console.error((e as { message: unknown }).message);
-			return null;
-		}
-	},
-);
+export const refetchArtists = createAsyncThunk('artists/refetchArtists', async () => {
+	try {
+		return await artistApiClient.getArtistList();
+	} catch (e: unknown) {
+		console.error((e as { message: unknown }).message);
+		return null;
+	}
+});
 
-export const { setIsArtistsLoading } =
-	artistsSlice.actions;
+export const { setIsArtistsLoading } = artistsSlice.actions;
 
 export const artistsReducer = artistsSlice.reducer;

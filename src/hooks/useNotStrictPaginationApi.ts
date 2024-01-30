@@ -49,7 +49,7 @@ export const useNotStrictPaginationApi = <T = unknown>(
 			setCurrentPageData(data);
 		});
 
-		if(currentPage !== 1) {
+		if (currentPage !== 1) {
 			getData(...[...params, { limit: elementsPerPage, page: currentPage - 1 }]).then((data) => {
 				setPrevPageData(data);
 			});

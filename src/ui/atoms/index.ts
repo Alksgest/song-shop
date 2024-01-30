@@ -1,1 +1,1 @@
-export * from "./heart-with-number";
+export * from './heart-with-number';

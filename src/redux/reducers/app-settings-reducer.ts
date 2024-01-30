@@ -16,7 +16,6 @@ export const appSettingsSlice = createSlice({
 	},
 });
 
-export const { setAppTitle } =
-	appSettingsSlice.actions;
+export const { setAppTitle } = appSettingsSlice.actions;
 
 export const appSettingsReducer = appSettingsSlice.reducer;
