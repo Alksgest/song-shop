@@ -6,6 +6,7 @@ import { SongsList } from '@/features/shared/components/songs-list';
 import { FavoriteSong } from '@/types/ui';
 import { setAppTitle } from '@/redux/reducers/app-settings-reducer';
 import { useAppDispatch } from '@/redux/hooks';
+import { CommonLoader } from '@/ui/molecules';
 
 type SongWithDate = FavoriteSong & { addingDate: Date };
 
@@ -40,6 +41,7 @@ async function getSongs(favoriteSongs: FavoriteSongsType): Promise<SongWithDate[
 
 export const FavoriteSongsListPage: React.FC = () => {
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [songs, setSongs] = useState<SongWithDate[]>([]);
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
@@ -53,12 +55,17 @@ export const FavoriteSongsListPage: React.FC = () => {
 		if (isLoaded) {
 			return;
 		}
-
+		setIsLoading(true);
 		getSongs(favoriteSongs).then((data) => {
 			setSongs(data);
+			setIsLoading(false);
 		});
 		setIsLoaded(() => true);
 	}, [favoriteSongs, isLoaded]);
 
-	return <SongsList songs={songs} displayArtistName />;
+	return (
+		<CommonLoader isLoading={isLoading}>
+			<SongsList songs={songs} displayArtistName />
+		</CommonLoader>
+	);
 };
