@@ -1,4 +1,4 @@
-import { Metadata, NextPage } from 'next';
+import { NextPage } from 'next';
 import { ArtistsPage } from '@/features/artists/pages/artists-page';
 import Head from 'next/head';
 

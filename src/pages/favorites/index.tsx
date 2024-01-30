@@ -1,4 +1,4 @@
-import { Metadata, NextPage } from 'next';
+import { NextPage } from 'next';
 import { FavoriteSongsListPage } from '@/features/songs/pages';
 import Head from 'next/head';
 

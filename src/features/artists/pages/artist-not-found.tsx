@@ -1,5 +1,4 @@
 import { styled } from '@mui/material';
-import Image from 'next/image';
 import { ArtistPaper } from '@/features/artists/components/artist-paper';
 import { useMemo } from 'react';
 import { Artist } from '@/types/models';

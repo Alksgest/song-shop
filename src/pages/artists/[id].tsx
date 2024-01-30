@@ -3,7 +3,6 @@ import { ArtistPage } from '@/features/artists/pages';
 import { artistApiClient } from '@/api/artist-api-client';
 import { Artist } from '@/types/models';
 import Head from 'next/head';
-import { redirect } from 'next/navigation';
 
 type Props = {
 	artist: Artist;

@@ -1,6 +1,5 @@
-import { AppSettingsState, ArtistsState } from '@/redux/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { artistApiClient } from '@/api/artist-api-client';
+import { AppSettingsState } from '@/redux/types';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: AppSettingsState = {
 	title: '',
