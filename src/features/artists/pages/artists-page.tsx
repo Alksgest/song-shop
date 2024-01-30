@@ -33,11 +33,9 @@ export const ArtistsPage: React.FC = () => {
 		<ArtistsContainer>
 			{data.map(el => {
 				return (
-					<React.Fragment key={el.id}>
-						<Link href={`artists/${el.id}`}>
-							<ArtistPaper key={el.id} artist={el} />
-						</Link>
-					</React.Fragment>
+					<Link key={el.id} href={`artists/${el.id}`}>
+						<ArtistPaper key={el.id} artist={el} />
+					</Link>
 				);
 			})}
 		</ArtistsContainer>
