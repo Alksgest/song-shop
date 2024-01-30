@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 
 type Props = {
 	artist: Artist;
-}
+};
 
 const Page: NextPage<Props> = ({ artist }) => {
 	return (
@@ -43,4 +43,3 @@ export async function generateMetadata({ artist }: Props): Promise<Metadata> {
 }
 
 export default Page;
-

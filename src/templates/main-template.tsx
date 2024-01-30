@@ -19,8 +19,11 @@ type Props = {
 export const MainTemplate: React.FC<Props> = ({ children }) => {
 	const [loaded, setLoaded] = useState(false);
 
-	const { title } = useAppSelector(state => state.appSettings);
-	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
+	const { title } = useAppSelector((state) => state.appSettings);
+	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(
+		favoriteSongsKey,
+		{},
+	);
 
 	const router = useRouter();
 
@@ -43,13 +46,7 @@ export const MainTemplate: React.FC<Props> = ({ children }) => {
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-						<IconButton
-							size="large"
-							edge="start"
-							color="inherit"
-							aria-label="menu"
-							sx={{ mr: 2 }}
-						>
+						<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
 							{router.pathname !== '/artists' && (
 								<Link href={'/artists'}>
 									<BackIcon />

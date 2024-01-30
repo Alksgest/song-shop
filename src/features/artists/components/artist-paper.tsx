@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 type Props = {
 	artist?: Artist;
-}
+};
 
 const smallImageSize = {
 	w: 80,
@@ -70,6 +70,6 @@ const NameContainer = styled('div')(() => {
 
 const StyledImage = styled(Image)(() => {
 	return {
-		borderRadius: "50%",
+		borderRadius: '50%',
 	};
 });

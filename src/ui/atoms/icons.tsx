@@ -4,7 +4,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import { styled } from '@mui/material';
 
-
 export const FilledHeartIcon = styled(FavoriteIcon)(() => {
 	return {
 		color: 'red',

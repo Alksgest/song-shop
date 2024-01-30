@@ -11,35 +11,37 @@ type Props = {
 	displayArtistName?: boolean;
 	paginationParams?: {
 		currentPage: number;
-		setCurrentPage: (page: number) => void,
+		setCurrentPage: (page: number) => void;
 		hasNext: boolean;
 		hasPrev: boolean;
-	}
-}
+	};
+};
 
-export const SongsList: React.FC<Props> = ({
- songs,
- paginationParams,
- displayArtistName,
-}) => {
-	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
+export const SongsList: React.FC<Props> = ({ songs, paginationParams, displayArtistName }) => {
+	const [favoriteSongs, setFavoriteSongs] = useLocalStorage<FavoriteSongsType>(
+		favoriteSongsKey,
+		{},
+	);
 
-	const toggleSong = useCallback((artistId: string, songId: string) => {
-		if (!artistId || !songId) {
-			return;
-		}
+	const toggleSong = useCallback(
+		(artistId: string, songId: string) => {
+			if (!artistId || !songId) {
+				return;
+			}
 
-		const key = generateSongKeyInLocalStorage(artistId, songId);
+			const key = generateSongKeyInLocalStorage(artistId, songId);
 
-		const copy = { ...favoriteSongs };
-		if (!copy[key]) {
-			copy[key] = { addingDate: new Date() };
-		} else {
-			copy[key] = null;
-		}
+			const copy = { ...favoriteSongs };
+			if (!copy[key]) {
+				copy[key] = { addingDate: new Date() };
+			} else {
+				copy[key] = null;
+			}
 
-		setFavoriteSongs(copy);
-	}, [favoriteSongs, setFavoriteSongs]);
+			setFavoriteSongs(copy);
+		},
+		[favoriteSongs, setFavoriteSongs],
+	);
 
 	const songsBlock = useMemo(() => {
 		if (!songs) {
@@ -48,11 +50,14 @@ export const SongsList: React.FC<Props> = ({
 		return songs.map((el) => {
 			const key = generateSongKeyInLocalStorage(el.artistId, el.id);
 			const isFavorite = !!favoriteSongs[key];
-			return <SongLine
-				key={key}
-				song={{ ...el, isFavorite }}
-				toggleSong={toggleSong}
-				displayArtistName={displayArtistName} />;
+			return (
+				<SongLine
+					key={key}
+					song={{ ...el, isFavorite }}
+					toggleSong={toggleSong}
+					displayArtistName={displayArtistName}
+				/>
+			);
 		});
 	}, [displayArtistName, favoriteSongs, songs, toggleSong]);
 

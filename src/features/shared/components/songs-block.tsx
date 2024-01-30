@@ -35,12 +35,12 @@ export const SongsBlock: React.FC<Props> = ({ artistId }) => {
 	const [favoriteSongs] = useLocalStorage<FavoriteSongsType>(favoriteSongsKey, {});
 
 	const songs = useMemo(() => {
-		if(!data) {
+		if (!data) {
 			setIsLoading(false);
 			return [];
 		}
 
-		const songs =  data.map((el) => {
+		const songs = data.map((el) => {
 			const favorite = { ...el, isFavorite: false };
 			const key = generateSongKeyInLocalStorage(el.artistId, el.id);
 			if (!!favoriteSongs[key]) {

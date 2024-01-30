@@ -24,21 +24,18 @@ async function getSongs(favoriteSongs: FavoriteSongsType): Promise<SongWithDate[
 		const [artistId, songId] = key.split('_');
 		const addingDate = favoriteSongs[key]!.addingDate;
 
-		const song: SongWithDate = await artistApiClient
-			.getSongById(artistId, songId)
-			.then((song) => {
-				return {
-					...song,
-					isFavorite: true,
-					addingDate,
-				};
-			});
+		const song: SongWithDate = await artistApiClient.getSongById(artistId, songId).then((song) => {
+			return {
+				...song,
+				isFavorite: true,
+				addingDate,
+			};
+		});
 
 		loadedSongs.push(song);
 	}
 
-	return loadedSongs
-		.toSorted((a, b) => +a.addingDate - +b.addingDate);
+	return loadedSongs.toSorted((a, b) => +a.addingDate - +b.addingDate);
 }
 
 export const FavoriteSongsListPage: React.FC = () => {
@@ -57,7 +54,7 @@ export const FavoriteSongsListPage: React.FC = () => {
 			return;
 		}
 
-		getSongs(favoriteSongs).then(data => {
+		getSongs(favoriteSongs).then((data) => {
 			setSongs(data);
 		});
 		setIsLoaded(() => true);

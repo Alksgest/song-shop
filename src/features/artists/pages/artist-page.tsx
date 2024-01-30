@@ -8,7 +8,7 @@ import { setAppTitle } from '@/redux/reducers/app-settings-reducer';
 
 type Props = {
 	artist: Artist;
-}
+};
 
 export const ArtistPage: React.FC<Props> = ({ artist }) => {
 	const dispatch = useAppDispatch();
@@ -33,4 +33,3 @@ const Container = styled('div')(() => {
 		flexDirection: 'column',
 	};
 });
-

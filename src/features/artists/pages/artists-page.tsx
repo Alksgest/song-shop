@@ -10,7 +10,7 @@ const pageTitle = 'Artists';
 
 export const ArtistsPage: React.FC = () => {
 	const dispatch = useAppDispatch();
-	const { data, isLoaded, isLoading } = useAppSelector(state => state.artists);
+	const { data, isLoaded, isLoading } = useAppSelector((state) => state.artists);
 
 	useEffect(() => {
 		dispatch(setAppTitle(pageTitle));
@@ -31,7 +31,7 @@ export const ArtistsPage: React.FC = () => {
 
 	return (
 		<ArtistsContainer>
-			{data.map(el => {
+			{data.map((el) => {
 				return (
 					<Link key={el.id} href={`artists/${el.id}`}>
 						<ArtistPaper key={el.id} artist={el} />
@@ -49,4 +49,3 @@ const ArtistsContainer = styled('div')(() => {
 		gap: '20px',
 	};
 });
-

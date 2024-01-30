@@ -34,10 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 				<meta name="robots" content="noindex" />
 
-				<meta
-					name="keywords"
-					content="song, songs, shop, artists, artist"
-				/>
+				<meta name="keywords" content="song, songs, shop, artists, artist" />
 
 				<link rel="shortcut icon" href={favicon.src} />
 				<link rel="preconnect" href="//www.google-analytics.com" />

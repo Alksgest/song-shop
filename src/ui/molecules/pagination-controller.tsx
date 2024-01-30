@@ -9,11 +9,15 @@ type Props = {
 	hasPrev: boolean;
 };
 
-export const PaginationController: React.FC<Props> = ({ currentPage, setPage, hasNext, hasPrev }) => {
+export const PaginationController: React.FC<Props> = ({
+	currentPage,
+	setPage,
+	hasNext,
+	hasPrev,
+}) => {
 	return (
 		<Flexbox>
-			<PaginationSelectorBox
-				onClick={() => hasPrev && setPage(currentPage - 1)}>
+			<PaginationSelectorBox onClick={() => hasPrev && setPage(currentPage - 1)}>
 				<CenteredDiv>
 					<ArrowBackIcon />
 				</CenteredDiv>
@@ -49,12 +53,10 @@ const CenteredDiv = styled('div')(() => {
 });
 
 const PaginationSelectorBox = styled('div')(() => {
-		return {
-			position: 'relative',
-			width: '2rem',
-			height: '2rem',
-			cursor: 'pointer',
-		};
-	},
-);
-
+	return {
+		position: 'relative',
+		width: '2rem',
+		height: '2rem',
+		cursor: 'pointer',
+	};
+});
